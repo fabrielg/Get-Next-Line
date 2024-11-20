@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:05 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/19 19:19:20 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/20 17:31:09 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,11 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
+
+void	*ft_calloc(size_t nmemb, size_t size);
+void	*ft_memset(void *s, int c, size_t n);
+void	ft_bzero(void *s, size_t n);
+size_t	ft_strlen_char(char const *str, char stop);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
 
 #endif
