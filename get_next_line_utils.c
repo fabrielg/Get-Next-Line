@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 13:54:34 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:21:23 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,28 @@ char	*ft_strrchr(const char *s, int c)
 		i--;
 	}
 	return ((char *) &s[i]);
+}
+
+char	*ft_substr(char const *s, unsigned int start, size_t len)
+{
+	char	*sub;
+	size_t	sub_len;
+	size_t	i;
+
+	if (!s)
+		return (0);
+	sub_len = 0;
+	while (start < ft_strlen_char(s, 0) && sub_len < len && s[start + sub_len])
+		sub_len++;
+	sub = ft_calloc(sub_len + 1, sizeof(char));
+	if (!sub)
+		return (0);
+	i = 0;
+	while (i < sub_len)
+	{
+		sub[i] = s[start + i];
+		i++;
+	}
+	sub[i] = 0;
+	return (sub);
 }
