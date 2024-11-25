@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:21:23 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:30:00 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,20 +23,9 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	new_calloc = malloc(calloc_len);
 	if (!new_calloc)
 		return (0);
-	ft_bzero(new_calloc, calloc_len);
+	while (calloc_len-- > 0)
+		new_calloc[calloc_len] = 0;
 	return (new_calloc);
-}
-
-void	*ft_memset(void *s, int c, size_t n)
-{
-	while (n-- > 0)
-		((unsigned char *)s)[n] = c;
-	return (s);
-}
-
-void	ft_bzero(void *s, size_t n)
-{
-	ft_memset(s, 0, n);
 }
 
 size_t	ft_strlen_char(char const *str, char stop)

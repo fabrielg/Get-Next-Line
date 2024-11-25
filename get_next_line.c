@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:20:55 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:33:32 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_strjoin(char **s1, char *s2)
 	i = 0;
 	while (s1[i])
 	{
-		join[i] = s1[i];
+		join[i] = *s1[i];
 		i++;
 	}
 	while (s2[i - s1_len])
@@ -65,7 +65,7 @@ void	ft_strcut(char **to_cut, char **paste)
 		free(*paste);
 		*paste = 0;
 	}
-	paste = ft_substr(*to_cut, 0, len);
+	*paste = ft_substr(*to_cut, 0, len);
 	if (!paste)
 		return ((void)0);
 	to_cut_len = ft_strlen_char(*to_cut, 0);

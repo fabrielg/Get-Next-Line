@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:05 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:18:50 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 18:30:34 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@
 # include <stdlib.h>
 
 char	*get_next_line(int fd);
+void	ft_strjoin(char **s1, char *s2);
+void	ft_strcut(char **to_cut, char **paste);
+void	read_file(int fd, char **buffer);
 
 void	*ft_calloc(size_t nmemb, size_t size);
-void	*ft_memset(void *s, int c, size_t n);
-void	ft_bzero(void *s, size_t n);
 size_t	ft_strlen_char(char const *str, char stop);
 char	*ft_strdup(const char *s);
 char	*ft_strrchr(const char *s, int c);
