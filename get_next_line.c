@@ -6,51 +6,63 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/20 17:35:28 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:41:49 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*get_next_line(int fd)
+size_t	file_size(int fd)
 {
-	static char		*buffer;
-	static size_t	start;
-	size_t			len;
-	char			*line;
+	size_t	nb_read;
 
-	if (buffer == 0)
-	{
-		buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1));
-		if (!buffer)
-			return (NULL);
-		start = 0;
-		buffer[BUFFER_SIZE] = 0;
-		read(fd, buffer, BUFFER_SIZE);
-	}
-	len = ft_strlen_char((const char *)(buffer + start), '\n') + 1;
-	line = ft_substr(buffer, start, len);
-	start += len;
-	return (line);
+	nb_read = 0;
+	while (read(fd, 0, 1))
+		nb_read++;
+	return (nb_read);
 }
 
-#include <fcntl.h>
-#include <stdio.h>
-int	main(void)
+size_t	read_file(int fd, char *buffer)
 {
-	char	*line;
-	int		fd;
-	int		n = 20;
+	size_t	nb_read;
+	char	c;
 
-	fd = open("lorem.txt", O_RDONLY);
-	if (fd < 0)
-		return (1);
-	for (int i = 0; i < n; i++)
+	nb_read = 0;
+	while (read(fd, &c, 1))
 	{
-		line = get_next_line(fd);
-		printf("%s", line);
-		if (line)
-			free(line);
+		buffer[nb_read] = c;
+		nb_read++;
 	}
-	return (0);
+	return (nb_read);
+}
+
+char	*get_next_line(int fd)
+{
+	static char	*file_content;
+	char		*buffer;
+	char		*line;
+	int			nb_read;
+
+	if (fd < 3 || BUFFER_SIZE <= 0)
+		return (NULL);
+	if (file_content == 0)
+	{
+		file_content = ft_calloc(file_size + 1, sizeof(char));
+		read_file(fd, file_content);
+	}
+
+	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!buffer)
+		return (NULL);
+	nb_read = read(fd, buffer, BUFFER_SIZE);
+	if (nb_read <= 0)
+	{
+		if (buffer)
+			free(buffer);
+		return (NULL);
+	}
+	line = ft_strdup(buffer);
+	if (!line)
+		return (NULL);
+	return (line);
 }

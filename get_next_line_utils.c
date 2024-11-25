@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/20 17:30:58 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 11:29:00 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	size_t	calloc_len;
 
 	calloc_len = nmemb * size;
-	if (!nmemb && !size && (calloc_len < nmemb || calloc_len < size))
+	if (calloc_len < nmemb || calloc_len < size)
 		return (0);
 	new_calloc = malloc(calloc_len);
 	if (!new_calloc)
@@ -49,26 +49,22 @@ size_t	ft_strlen_char(char const *str, char stop)
 	return (i);
 }
 
-char	*ft_substr(char const *s, unsigned int start, size_t len)
+char	*ft_strdup(const char *s)
 {
-	char	*sub;
-	size_t	sub_len;
 	size_t	i;
+	size_t	length;
+	char	*dup;
 
-	if (!s)
-		return (0);
-	sub_len = 0;
-	while (start < ft_strlen_char(s, 0) && sub_len < len && s[start + sub_len])
-		sub_len++;
-	sub = ft_calloc((sub_len + 1), sizeof(char));
-	if (!sub)
-		return (0);
+	length = ft_strlen_char(s, '\n');
+	dup = malloc(sizeof(char) * (length + 1));
+	if (!dup)
+		return (NULL);
 	i = 0;
-	while (i < sub_len)
+	while (i < length)
 	{
-		sub[i] = s[start + i];
+		dup[i] = s[i];
 		i++;
 	}
-	sub[i] = 0;
-	return (sub);
+	dup[i] = 0;
+	return (dup);
 }
