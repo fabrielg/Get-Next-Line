@@ -6,63 +6,48 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 11:41:49 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 14:01:43 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-size_t	file_size(int fd)
+char	*read_file(int fd, char **buffer)
 {
-	size_t	nb_read;
+	char	*content;
+	int		nb_read;
 
-	nb_read = 0;
-	while (read(fd, 0, 1))
-		nb_read++;
-	return (nb_read);
-}
-
-size_t	read_file(int fd, char *buffer)
-{
-	size_t	nb_read;
-	char	c;
-
-	nb_read = 0;
-	while (read(fd, &c, 1))
+	if (!buffer)
+		*buffer = ft_calloc(1, sizeof(char));
+	if (!ft_strrchr(*buffer, '\n'))
+		return (NULL);
+	content = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	nb_read = -1;
+	while (nb_read != 0)
 	{
-		buffer[nb_read] = c;
-		nb_read++;
+		nb_read = read(fd, content, BUFFER_SIZE);
+		if (nb_read == 0)
+		{
+			free(*buffer);
+			*buffer = 0;
+		}
+		// Ajouter conntent a buffer;
 	}
-	return (nb_read);
+	return(content);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*file_content;
-	char		*buffer;
+	static char	*buffer;
 	char		*line;
-	int			nb_read;
 
-	if (fd < 3 || BUFFER_SIZE <= 0)
-		return (NULL);
-	if (file_content == 0)
-	{
-		file_content = ft_calloc(file_size + 1, sizeof(char));
-		read_file(fd, file_content);
-	}
-
-	buffer = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	if (!buffer)
-		return (NULL);
-	nb_read = read(fd, buffer, BUFFER_SIZE);
-	if (nb_read <= 0)
+	if (read(fd, 0, 0) < 0)
 	{
 		if (buffer)
 			free(buffer);
+		buffer = 0;
 		return (NULL);
 	}
-	line = ft_strdup(buffer);
-	if (!line)
-		return (NULL);
-	return (line);
+	read_file(fd, &buffer);
+	// Fonction get line
 }

@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 11:29:00 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/25 13:54:34 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,18 @@ char	*ft_strdup(const char *s)
 	}
 	dup[i] = 0;
 	return (dup);
+}
+
+char	*ft_strrchr(const char *s, int c)
+{
+	int	i;
+
+	i = ft_strlen_char(s, 0);
+	while (s[i] != (unsigned char)c)
+	{
+		if (i == 0 && s[i] != c)
+			return ((char *) 0);
+		i--;
+	}
+	return ((char *) &s[i]);
 }
