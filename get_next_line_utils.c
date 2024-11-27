@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:30:00 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/27 11:59:26 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*ft_calloc(size_t nmemb, size_t size)
 	size_t	calloc_len;
 
 	calloc_len = nmemb * size;
-	if (calloc_len < nmemb || calloc_len < size)
+	if (calloc_len < nmemb && calloc_len < size)
 		return (0);
 	new_calloc = malloc(calloc_len);
 	if (!new_calloc)
@@ -32,6 +32,8 @@ size_t	ft_strlen_char(char const *str, char stop)
 {
 	size_t	i;
 
+	if (!str)
+		return (0);
 	i = 0;
 	while (str[i] && str[i] != stop)
 		i++;
@@ -62,11 +64,13 @@ char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
+	if (!s)
+		return (NULL);
 	i = ft_strlen_char(s, 0);
 	while (s[i] != (unsigned char)c)
 	{
 		if (i == 0 && s[i] != c)
-			return ((char *) 0);
+			return (NULL);
 		i--;
 	}
 	return ((char *) &s[i]);

@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/25 18:33:32 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:14:06 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_strjoin(char **s1, char *s2)
 
 	s1_len = ft_strlen_char(*s1, 0);
 	s2_len = ft_strlen_char(s2, 0);
-	join = malloc(sizeof(char) * (s1_len + s2_len + 1));
+	join = ft_calloc(s1_len + s2_len + 1, sizeof(char));
 	if (!join)
-		return ((void) NULL);
+		return ((void) 0);
 	i = 0;
-	while (s1[i])
+	while (*s1 && (*s1)[i])
 	{
-		join[i] = *s1[i];
+		join[i] = (*s1)[i];
 		i++;
 	}
 	while (s2[i - s1_len])
@@ -58,7 +58,7 @@ void	ft_strcut(char **to_cut, char **paste)
 		return ((void)0);
 	i = 0;
 	len = ft_strlen_char(*to_cut, '\n');
-	if (!ft_strrchr(*to_cut, '\n'))
+	if (ft_strrchr(*to_cut, '\n') != NULL)
 		len++;
 	if (*paste)
 	{
@@ -77,22 +77,31 @@ void	read_file(int fd, char **buffer)
 	char	*content;
 	int		nb_read;
 
-	if (!buffer)
+	printf("NULL: %s\n\n\n", *buffer);
+	if (*buffer == NULL)
 		*buffer = ft_calloc(1, sizeof(char));
-	if (!ft_strrchr(*buffer, '\n'))
-		return (void)0;
+	printf("PAS NULL: %s\n\n\n", *buffer);
+	if (ft_strrchr(*buffer, '\n') != NULL)
+		return ((void)0);
 	content = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
-	nb_read = -1;
-	while (nb_read != 0)
+	while (1)
 	{
 		nb_read = read(fd, content, BUFFER_SIZE);
-		if (nb_read == 0)
+		printf("nb: %d\n", nb_read);
+		if (nb_read <= 0)
 		{
-			free(*buffer);
-			*buffer = 0;
+			if (ft_strlen_char(*buffer, 0) == 0)
+			{
+				free(*buffer);
+				*buffer = NULL;
+			}
 			break ;
 		}
+		printf("avant join: %s\n\n%s\n\n", *buffer, content);
 		ft_strjoin(buffer, content);
+		printf("apres join: %s\n\n%s\n\n", *buffer, content);
+		if (nb_read < BUFFER_SIZE || ft_strrchr(*buffer, '\n') != NULL)
+			break ;
 	}
 	free(content);
 }
@@ -110,6 +119,8 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	read_file(fd, &buffer);
+	printf("AVANT CUT: %s\n\n\n%s\n\n\n", buffer, line);
 	ft_strcut(&buffer, &line);
+	printf("APRES CUT: %s\n\n\n%s\n\n\n", buffer, line);
 	return (line);
 }
