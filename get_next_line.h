@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:05 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 10:59:52 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:36:17 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-#include <stdio.h>
 
 char	*get_next_line(int fd);
 void	ft_strjoin(char **s1, char *s2);

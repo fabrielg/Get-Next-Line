@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 12:14:06 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/27 12:57:03 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,23 +40,13 @@ void	ft_strjoin(char **s1, char *s2)
 	*s1 = join;
 }
 
-/*
- *	*to_cut = "Lorem ipsum dolor sit amet\n, consectetur adipiscing elit"
- *	*paste = 0; // on veut le malloc
- *	on recupere un substr de to_cut jusqu'a '\n' ou 0;
- *	substr = "Lorem ipsum dolor sit amet\n"
- *	malloc cette longueur sur *paste lui attribuer;
- *	il faut maintenant cut to_cut. On va le substr lui meme + len
- */
 void	ft_strcut(char **to_cut, char **paste)
 {
-	size_t	i;
 	size_t	len;
 	size_t	to_cut_len;
 
 	if (!(*to_cut))
 		return ((void)0);
-	i = 0;
 	len = ft_strlen_char(*to_cut, '\n');
 	if (ft_strrchr(*to_cut, '\n') != NULL)
 		len++;
@@ -77,17 +67,14 @@ void	read_file(int fd, char **buffer)
 	char	*content;
 	int		nb_read;
 
-	printf("NULL: %s\n\n\n", *buffer);
 	if (*buffer == NULL)
 		*buffer = ft_calloc(1, sizeof(char));
-	printf("PAS NULL: %s\n\n\n", *buffer);
 	if (ft_strrchr(*buffer, '\n') != NULL)
 		return ((void)0);
 	content = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
 	while (1)
 	{
 		nb_read = read(fd, content, BUFFER_SIZE);
-		printf("nb: %d\n", nb_read);
 		if (nb_read <= 0)
 		{
 			if (ft_strlen_char(*buffer, 0) == 0)
@@ -97,9 +84,7 @@ void	read_file(int fd, char **buffer)
 			}
 			break ;
 		}
-		printf("avant join: %s\n\n%s\n\n", *buffer, content);
 		ft_strjoin(buffer, content);
-		printf("apres join: %s\n\n%s\n\n", *buffer, content);
 		if (nb_read < BUFFER_SIZE || ft_strrchr(*buffer, '\n') != NULL)
 			break ;
 	}
@@ -119,8 +104,9 @@ char	*get_next_line(int fd)
 		return (NULL);
 	}
 	read_file(fd, &buffer);
-	printf("AVANT CUT: %s\n\n\n%s\n\n\n", buffer, line);
+	if (!buffer)
+		return (NULL);
+	line = NULL;
 	ft_strcut(&buffer, &line);
-	printf("APRES CUT: %s\n\n\n%s\n\n\n", buffer, line);
 	return (line);
 }

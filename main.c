@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:01:22 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 11:51:34 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/27 13:02:57 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,19 @@ int	main(void)
 {
 	char	*line;
 	int		fd;
-	int		n = 4;
+	int		n;
+	int		i;
 
 	fd = open("lorem.txt", O_RDONLY);
 	if (fd < 3)
 		return (1);
-	for (int i = 0; i < n; i++)
+	n = 20;
+	i = 0;
+	while (i < n)
 	{
 		line = get_next_line(fd);
-		printf("LINE: %s\n\n\n", line);
+		printf("%s", line);
+		i++;
 	}
 	free(line);
 	return (0);
