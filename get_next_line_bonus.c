@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 01:54:41 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/30 01:57:14 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/30 02:06:45 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,22 +103,24 @@ void	read_file(int fd, char **buffer)
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[1024];
 	char		*line;
 
 	if (read(fd, 0, 0) < 0)
 	{
-		if (buffer)
-			free(buffer);
-		buffer = NULL;
+		if (fd < 0 || fd > 1024)
+			return (NULL);
+		if (buffer[fd])
+			free(buffer[fd]);
+		buffer[fd] = NULL;
 		return (NULL);
 	}
-	read_file(fd, &buffer);
-	if (!buffer)
+	read_file(fd, &buffer[fd]);
+	if (!buffer[fd])
 		return (NULL);
 	line = NULL;
-	ft_strcut(&buffer, &line);
+	ft_strcut(&buffer[fd], &line);
 	if (!line)
-		free(buffer);
+		free(buffer[fd]);
 	return (line);
 }
