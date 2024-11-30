@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 12:57:03 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:23:43 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,22 +44,25 @@ void	ft_strcut(char **to_cut, char **paste)
 {
 	size_t	len;
 	size_t	to_cut_len;
+	char	*temp;
 
 	if (!(*to_cut))
 		return ((void)0);
-	len = ft_strlen_char(*to_cut, '\n');
-	if (ft_strrchr(*to_cut, '\n') != NULL)
+	temp = *to_cut;
+	len = ft_strlen_char(temp, '\n');
+	if (ft_strrchr(temp, '\n') != NULL)
 		len++;
 	if (*paste)
 	{
 		free(*paste);
 		*paste = 0;
 	}
-	*paste = ft_substr(*to_cut, 0, len);
+	*paste = ft_substr(temp, 0, len);
 	if (!paste)
 		return ((void)0);
-	to_cut_len = ft_strlen_char(*to_cut, 0);
-	*to_cut = ft_substr(*to_cut + len, 0, to_cut_len);
+	to_cut_len = ft_strlen_char(temp, 0);
+	*to_cut = ft_substr(temp + len, 0, to_cut_len);
+	free(temp);
 }
 
 void	read_file(int fd, char **buffer)
@@ -75,6 +78,7 @@ void	read_file(int fd, char **buffer)
 	while (1)
 	{
 		nb_read = read(fd, content, BUFFER_SIZE);
+		content[nb_read] = 0;
 		if (nb_read <= 0)
 		{
 			if (ft_strlen_char(*buffer, 0) == 0)
@@ -100,7 +104,7 @@ char	*get_next_line(int fd)
 	{
 		if (buffer)
 			free(buffer);
-		buffer = 0;
+		buffer = NULL;
 		return (NULL);
 	}
 	read_file(fd, &buffer);
@@ -108,5 +112,7 @@ char	*get_next_line(int fd)
 		return (NULL);
 	line = NULL;
 	ft_strcut(&buffer, &line);
+	if (!line)
+		free(buffer);
 	return (line);
 }
