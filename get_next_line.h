@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:05 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 12:36:17 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:43:48 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*get_next_line(int fd);
 void	ft_strjoin(char **s1, char *s2);
 void	ft_strcut(char **to_cut, char **paste);
 void	read_file(int fd, char **buffer);
+int		buffer_alloc(char **buffer);
 
 void	*ft_calloc(size_t nmemb, size_t size);
 size_t	ft_strlen_char(char const *str, char stop);

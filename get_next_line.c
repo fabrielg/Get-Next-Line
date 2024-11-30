@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:12 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/30 01:23:43 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:42:08 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,22 @@ void	ft_strcut(char **to_cut, char **paste)
 	free(temp);
 }
 
+int	buffer_alloc(char **buffer)
+{
+	if (*buffer == NULL)
+		*buffer = ft_calloc(1, sizeof(char));
+	if (*buffer == NULL)
+		return (0);
+	return (1);
+}
+
 void	read_file(int fd, char **buffer)
 {
 	char	*content;
 	int		nb_read;
 
-	if (*buffer == NULL)
-		*buffer = ft_calloc(1, sizeof(char));
+	if (!buffer_alloc(buffer))
+		return ((void)0);
 	if (ft_strrchr(*buffer, '\n') != NULL)
 		return ((void)0);
 	content = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
@@ -82,10 +91,7 @@ void	read_file(int fd, char **buffer)
 		if (nb_read <= 0)
 		{
 			if (ft_strlen_char(*buffer, 0) == 0)
-			{
-				free(*buffer);
-				*buffer = NULL;
-			}
+				return (free(*buffer), *buffer = NULL, free(content));
 			break ;
 		}
 		ft_strjoin(buffer, content);

@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/19 17:34:28 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 11:59:26 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/11/30 01:28:28 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 		sub_len++;
 	sub = ft_calloc(sub_len + 1, sizeof(char));
 	if (!sub)
-		return (0);
+		return (NULL);
 	i = 0;
 	while (i < sub_len)
 	{
