@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/25 11:01:22 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/27 13:02:57 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:17:27 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	main(void)
 	{
 		line = get_next_line(fd);
 		printf("%s", line);
+		free(line);
 		i++;
 	}
+	get_next_line(-42);
 	free(line);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 01:55:08 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/30 01:57:43 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:23:21 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@ void	*ft_calloc(size_t nmemb, size_t size)
 
 	calloc_len = nmemb * size;
 	if (calloc_len < nmemb && calloc_len < size)
-		return (0);
+		return (NULL);
 	new_calloc = malloc(calloc_len);
 	if (!new_calloc)
-		return (0);
+		return (NULL);
 	while (calloc_len-- > 0)
 		new_calloc[calloc_len] = 0;
 	return (new_calloc);

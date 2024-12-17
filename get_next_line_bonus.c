@@ -6,7 +6,7 @@
 /*   By: gfrancoi <gfrancoi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/30 01:54:41 by gfrancoi          #+#    #+#             */
-/*   Updated: 2024/11/30 02:06:45 by gfrancoi         ###   ########.fr       */
+/*   Updated: 2024/12/17 13:23:46 by gfrancoi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	read_file(int fd, char **buffer)
 	if (ft_strrchr(*buffer, '\n') != NULL)
 		return ((void)0);
 	content = ft_calloc(BUFFER_SIZE + 1, sizeof(char));
+	if (!content)
+		return ;
 	while (1)
 	{
 		nb_read = read(fd, content, BUFFER_SIZE);
